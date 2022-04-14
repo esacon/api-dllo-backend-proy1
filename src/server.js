@@ -27,6 +27,8 @@ app.use((req, res, next) => {
 app.use('/users', require('./routes/user.routes'));
 app.use('/posts', require('./routes/post.routes'));
 app.use('/reviews', require('./routes/review.routes'));
+app.use('/cart', require('./routes/cart.routes'));
+app.use('/history', require('./routes/history.routes'));
 
 
 // Arrancamos el servidor

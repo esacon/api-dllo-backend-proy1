@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
     owner_id: {
         type: String,
-        required: true,
-        trim: true
+        required: true
     },
     img_url: {
         type: String,

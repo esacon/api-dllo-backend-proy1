@@ -1,8 +1,6 @@
 const postModel = require('../models/post.model');
-const mongoose = require('mongoose');
 
-const create = async (req, res) => {
-
+const createPost = async (req, res) => {
     const post = new postModel(req.body);
 
     try {
@@ -11,48 +9,31 @@ const create = async (req, res) => {
     } catch (error) {
         res.status(500).send(error);
     }
-
 }
 
-const update = async (req, res) => {
-    const hash = crypt.cryptPassword('hola mundo');
-    console.log(hash)
-    res.status(200).json({});
-}
-
-const getPostByOwner = async (req, res) => {
-    
-
-}
-
-const getPost = async (req, res) => {
+const fetchPost = async (req, res) => {
     try {
         let posts = [];
         if (req.query.post_id){
             posts = await postModel.findOne({ '_id': req.query.post_id });
         } else {
-            const _id = mongoose.Types.ObjectId(req.query.user_id);
-            posts = await postModel.find({ 'owner_id': _id });
+            posts = await postModel.find({ 'owner_id': req.query.user_id });
         }
-        res.status(200).json(posts);   
+        res.status(200).send(posts);   
     } catch (error) {
         res.status(500).send(error)
     }
-
-
 }
 
-const getRecent = async (req, res) => {
-    
+const fetchRecentPosts = async (req, res) => {    
     try {
-        const posts = await postModel.find({});
+        const posts = await postModel.find({}).sort({created_date: 'desc'});
         res.status(200).json(posts);      
     } catch (error) {
         res.status(500).send(error)
     }
-
 }
 
 module.exports = {
-    create, update, getPost, getRecent, getPostByOwner
+    createPost, fetchPost, fetchRecentPosts
 }
