@@ -40,15 +40,12 @@ const doLogin = async (req, res) => {
 }
 
 const fetchPrevLogin = async (req, res) => {
-    const { user_id } = req.body;
-    const usr = await userModel.findOne({ '_id': user_id });
-    res.status(200).send(usr);
+    res.status(200).send(await userModel.findById(req.body.user_id));
 }
 
 const fetchUser = async (req, res) => {
     try {
-        const usr = await userModel.findOne({ '_id': req.query.user_id });
-        res.status(200).send(usr);      
+        res.status(200).send(await userModel.findById(req.query.user_id));      
     } catch (error) {
         res.status(500).send(error);
     }
